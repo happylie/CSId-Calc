@@ -5,6 +5,7 @@
 </div>
 
 ## Check Session ID Entropy Calculator
+### 세션 ID 엔트로피 계산기
 - https://happylie.tistory.com/145
 
 ### 설치 방법
