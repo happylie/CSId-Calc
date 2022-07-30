@@ -18,14 +18,55 @@ class Colors:
     RESET = '\033[0m'
 
 
+class CheckCharacters:
+    """
+    # Lower Case : 26
+    # Upper Case : 26
+    # Lower & Upper Case : 52
+    # Arabic numerals : 10
+    # Lower Case & Arabic numerals : 36
+    # Upper Case & Arabic numerals : 36
+    # Lower & Upper Case & Arabic numerals : 62
+    """
+
+    def __init__(self, sid):
+        self.alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        self.arabic_numerals = '0123456789'
+        self.sid = sid
+
+    def __get_lowercase(self) -> int:
+        for c in self.sid:
+            if c in self.alphabet:
+                return 26
+        return 0
+
+    def __get_uppercase(self) -> int:
+        for c in self.sid:
+            if c in self.alphabet.upper():
+                return 26
+        return 0
+
+    def __get_numer(self) -> int:
+        for c in self.sid:
+            if c in self.arabic_numerals:
+                return 10
+        return 0
+
+    def str_length(self) -> int:
+        lc = self.__get_lowercase()
+        up = self.__get_uppercase()
+        n = self.__get_numer()
+        return lc+up+n
+
+
 class CheckEntropy:
     def __init__(self, session_id):
-        self.session_id = session_id
+        self.sid = session_id.strip()
+        self.cc = CheckCharacters(self.sid)
 
     def __get_check_entropy(self):
-        sid = self.session_id.strip()
-        sid_char_len = len(sid)
-        sid_len = len(list(set(list(sid))))
+        sid_char_len = len(self.sid)
+        sid_len = self.cc.str_length()
         sid_strength = round(math.log2(sid_len ** sid_char_len), 1)
         sid_result = Colors.GREEN+'Good'+Colors.RESET
         if int(sid_strength) < 128:
@@ -36,7 +77,7 @@ class CheckEntropy:
         try:
             data = self.__get_check_entropy()
             print('### Session ID Check Entropy ###')
-            print('+ Session ID : {sid}'.format(sid=self.session_id))
+            print('+ Session ID : {sid}'.format(sid=self.sid))
             print('+ String Length : {sid_len}'.format(sid_len=data[0]))
             print('+ Characters : {sid_char_len} Type'.format(sid_char_len=data[1]))
             print('+ Strength : {sid_strength} Bits'.format(sid_strength=data[2]))
