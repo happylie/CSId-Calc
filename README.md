@@ -46,7 +46,7 @@ $ python csid.py -s 1a44f079183C8492d55805ef18f1079b0357c8d6
 + Strength : 238.2 Bits
 + Result : Good
 ```
-4. 결과값 설명
+3. 결과값 설명
    - Session ID : 입력한 Session ID(세션 ID)
    - String Length :  Session ID 값의 길이
    - Characters : Session ID 값의 조합된 글자수
